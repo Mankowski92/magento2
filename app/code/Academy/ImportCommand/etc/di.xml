@@ -4,7 +4,7 @@
     <type name="Magento\Framework\Console\CommandListInterface">
         <arguments>
             <argument name="commands" xsi:type="array">
-                <item name="example" xsi:type="object">Academy\CustomCommand\Console\Partytip</item>
+                <item name="example" xsi:type="object">Academy\ImportCommand\Console\Import</item>
             </argument>
         </arguments>
     </type>

@@ -1,12 +1,44 @@
 {
-  "product": {
-    "sku": "TEST-001",
-    "name": "Test product 1",
-    "attribute_set_id": 4,
-    "price": 25,
-    "status": 1,
-    "visibility": 1,
-    "type_id": "simple",
-    "weight": "0.5"
+  "allProducts": {
+    "product1": {
+      "sku": "TEST-001",
+      "name": "Test product 1",
+      "attribute_set_id": 4,
+      "price": 25,
+      "status": 1,
+      "visibility": 1,
+      "type_id": "simple",
+      "weight": "0.5"
+    },
+    "product2": {
+      "sku": "TEST-002",
+      "name": "Test product 2",
+      "attribute_set_id": 4,
+      "price": 25,
+      "status": 1,
+      "visibility": 1,
+      "type_id": "simple",
+      "weight": "0.5"
+    },
+    "product3": {
+      "sku": "TEST-003",
+      "name": "Test product 3",
+      "attribute_set_id": 4,
+      "price": 25,
+      "status": 1,
+      "visibility": 1,
+      "type_id": "simple",
+      "weight": "0.5"
+    },
+    "product4": {
+      "sku": "TEST-004",
+      "name": "Test product 4",
+      "attribute_set_id": 4,
+      "price": 25,
+      "status": 1,
+      "visibility": 1,
+      "type_id": "simple",
+      "weight": "0.5"
+    }
   }
 }

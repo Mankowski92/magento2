@@ -27,7 +27,5 @@ class Partytip extends Command
         foreach ($array as $item) {
             echo "$item\n";
         }
-
-
     }
 }

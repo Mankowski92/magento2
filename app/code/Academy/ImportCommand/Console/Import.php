@@ -3,12 +3,15 @@
 namespace Academy\ImportCommand\Console;
 
 use Magento\Catalog\Model\ProductFactory;
+use Magento\Catalog\Model\ResourceModel\Product;
 use Magento\Framework\App\Area;
 use Magento\Framework\App\State;
 use Magento\Framework\Filesystem\Driver\File;
 use Magento\Framework\Module\Dir\Reader;
 use Magento\Framework\Serialize\Serializer\Json;
+use Magento\InventoryApi\Api\Data\SourceItemInterface;
 use Magento\InventoryApi\Api\Data\SourceItemInterfaceFactory;
+use Magento\Store\Model\StoreManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -20,7 +23,6 @@ class Import extends Command
     const SERIALIZED = 'serialized';
     const VALUE = 'value';
 
-
     protected $reader;
     protected $file;
     protected $json;
@@ -29,20 +31,25 @@ class Import extends Command
     protected $value = null;
     protected $productFactory;
     protected $resourceModel;
-
     protected $state;
     protected $storeManager;
+    protected $sourceItemsSaveInterface;
+    protected $sourceItem;
+
 
     public function __construct(
-        Json                                         $json,
-        Reader                                       $reader,
-        File                                         $file,
-        ProductFactory                               $productFactory,
-        State                                        $state,
-        \Magento\Store\Model\StoreManagerInterface   $storeManager,
-        \Magento\Catalog\Model\ResourceModel\Product $resourceModel
-
+        Json                       $json,
+        Reader                     $reader,
+        File                       $file,
+        ProductFactory             $productFactory,
+        State                      $state,
+        StoreManagerInterface      $storeManager,
+        Product                    $resourceModel,
+        SourceItemInterface        $sourceItemsSaveInterface,
+        SourceItemInterfaceFactory $sourceItem
     )
+
+
     {
         parent::__construct();
         $this->reader = $reader;
@@ -52,37 +59,36 @@ class Import extends Command
         $this->storeManager = $storeManager;
         $this->productFactory = $productFactory;
         $this->resourceModel = $resourceModel;
+        $this->sourceItemsSaveInterface = $sourceItemsSaveInterface;
+        $this->sourceItem = $sourceItem;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+
+    protected
+    function execute(InputInterface $input, OutputInterface $output)
     {
+        $fileName = $input->getOption(self::FILE);
+        $serialized = $input->getOption(self::SERIALIZED);
+        $value = $input->getOption(self::VALUE);
 
-        $this->state->setAreaCode(Area::AREA_ADMINHTML);
-        $this->storeManager->setCurrentStore($this->storeManager->getDefaultStoreView()->getWebsiteId());
+        $moduleEtcPath = $this->reader->getModuleDir(
+            \Magento\Framework\Module\Dir::MODULE_ETC_DIR,
+            'Academy_ImportCommand'
+        );
 
-        $product = $this->productFactory->create();
-        $test = $this->resourceModel->save($product);
-
-        try {
-            $test = 'DUPA DUPA';
-            $fileName = $input->getOption(self::FILE);
-            $serialized = $input->getOption(self::SERIALIZED);
-            $value = $input->getOption(self::VALUE);
-            echo $test;
-
-
-            $moduleEtcPath = $this->reader->getModuleDir(
-                \Magento\Framework\Module\Dir::MODULE_ETC_DIR,
-                'Academy_ImportCommand'
-            );
-
-            $fullFileName = $moduleEtcPath . '/' . $fileName;
+        $fullFileName = $moduleEtcPath . '/' . $fileName;
+        $exist = ($this->file->isExists($fullFileName));
+        if ($exist) {
             $fileContent = $this->file->fileGetContents($fullFileName);
             $unserializedData = $this->json->unserialize($fileContent);
+            $keys_array = array_keys($unserializedData['allProducts']['product1']);
+            $isExisting = (in_array("$value", $keys_array));
+        }
+
+        try {
 
             $output->writeln("\n<info>You are looking for $fileName \n</info>");
             $output->writeln("Full path to file: $fullFileName\n");
-            $output->writeln("$test");
 
             if ($this->file->isExists($fullFileName)) {
                 $output->writeln("<comment>FILE EXIST\n</comment>");
@@ -91,30 +97,47 @@ class Import extends Command
                 $output->writeln('<error>FILE DOES NOT EXIST</error>');
             }
 
-            if ($serialized) {
+            if ($serialized && $exist) {
                 $output->writeln("<info>Unserialized data: </info>");
 
                 var_dump($unserializedData) . "\n";
-            } else {
-                $output->writeln("<info>Put flag '--serialized true' to see unserialized content\n </info> ");
             }
-
-            $keys_array = array_keys($unserializedData['product']);
-            $isExisting = (in_array("$value", $keys_array));
 
             if ($value && $isExisting) {
                 $unserializedData = $this->json->unserialize($fileContent);
-                $output->writeln("\nvalue of $value is " . $unserializedData['product']["$value"]);
-            } else {
-                $output->writeln("<error>\nThere is no key $value. Please try one of:</error>\n");
-                foreach ($keys_array as $item) {
-                    echo "$item \n";
-                }
-                echo "\n";
+                $output->writeln("\nvalue of $value is " . $unserializedData['allProducts']['product1']["$value"]);
+
+                $productData = $this->json->unserialize($fileContent);
+
+                $this->createProduct($productData['allProducts']);
             }
         } catch (FileSystemException $e) {
             echo $e;
         }
+    }
+
+    private
+    function createProduct(array $productData)
+    {
+        echo "\nAdding product\n";
+
+        var_dump($productData);
+
+        $this->state->setAreaCode(Area::AREA_ADMINHTML);
+        $this->storeManager->setCurrentStore($this->storeManager->getDefaultStoreView()->getWebsiteId());
+
+//        $product = $this->productFactory->create();
+//
+//        $product->setName($productData['product']['name'])
+//            ->setTypeId(Type::TYPE_SIMPLE)
+//            ->setAttributeSetId($productData['product']['attribute_set_id'])
+//            ->setSku($productData['product']['sku'])
+//            ->setVisibility($productData['product']['visibility'])
+//            ->setPrice($productData['product']['price'])
+//            ->setStatus($productData['product']['status'])
+//            ->setWebsiteIds(array(1));
+//
+//        $this->resourceModel->save($product);
     }
 
     protected function configure()

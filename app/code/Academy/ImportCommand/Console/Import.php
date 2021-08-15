@@ -109,6 +109,8 @@ class Import extends Command
 
         foreach ($productData as $eachProduct) {
             $productName = $eachProduct['name'];
+            $imagePath = "/var/www/html/pub/media/custom_products_images/" . $eachProduct['imagePath'];
+            
             echo "Adding $productName...\n";
 
             $product = $this->productFactory->create();
@@ -120,6 +122,7 @@ class Import extends Command
                 ->setVisibility($eachProduct['visibility'])
                 ->setPrice($eachProduct['price'])
                 ->setStatus($eachProduct['status'])
+                ->addImageToMediaGallery($imagePath, ['image', 'small_image', 'thumbnail'], false, false)
                 ->setWebsiteIds(array(1));
 
             $this->resourceModel->save($product);

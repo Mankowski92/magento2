@@ -8,37 +8,41 @@
       "status": 1,
       "visibility": 1,
       "type_id": "simple",
-      "weight": "0.5"
+      "weight": "0.5",
+      "imagePath": "img1.jpeg"
     },
     "product2": {
       "sku": "TEST-002",
       "name": "Test product 2",
       "attribute_set_id": 4,
-      "price": 25,
+      "price": 50,
       "status": 1,
       "visibility": 1,
       "type_id": "simple",
-      "weight": "0.5"
+      "weight": "0.5",
+      "imagePath": "img2.jpeg"
     },
     "product3": {
       "sku": "TEST-003",
       "name": "Test product 3",
       "attribute_set_id": 4,
-      "price": 25,
+      "price": 110,
       "status": 1,
       "visibility": 1,
       "type_id": "simple",
-      "weight": "0.5"
+      "weight": "0.5",
+      "imagePath": "img3.jpeg"
     },
     "product4": {
       "sku": "TEST-004",
       "name": "Test product 4",
       "attribute_set_id": 4,
-      "price": 25,
+      "price": 70,
       "status": 1,
       "visibility": 1,
       "type_id": "simple",
-      "weight": "0.5"
+      "weight": "0.5",
+      "imagePath": "img4.jpeg"
     }
   }
 }

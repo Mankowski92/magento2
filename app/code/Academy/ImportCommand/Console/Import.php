@@ -2,10 +2,12 @@
 
 namespace Academy\ImportCommand\Console;
 
+use Magento\Catalog\Model\Product\Type;
 use Magento\Catalog\Model\ProductFactory;
 use Magento\Catalog\Model\ResourceModel\Product;
 use Magento\Framework\App\Area;
 use Magento\Framework\App\State;
+use Magento\Framework\Exception\FileSystemException;
 use Magento\Framework\Filesystem\Driver\File;
 use Magento\Framework\Module\Dir\Reader;
 use Magento\Framework\Serialize\Serializer\Json;
@@ -20,22 +22,19 @@ use Symfony\Component\Console\Output\OutputInterface;
 class Import extends Command
 {
     const FILE = 'file';
-    const SERIALIZED = 'serialized';
-    const VALUE = 'value';
+    const ADDDATA = 'addData';
 
     protected $reader;
     protected $file;
     protected $json;
     protected $fileName = null;
-    protected $serialized = null;
-    protected $value = null;
+    protected $addData = null;
     protected $productFactory;
     protected $resourceModel;
     protected $state;
     protected $storeManager;
     protected $sourceItemsSaveInterface;
     protected $sourceItem;
-
 
     public function __construct(
         Json                       $json,
@@ -48,7 +47,6 @@ class Import extends Command
         SourceItemInterface        $sourceItemsSaveInterface,
         SourceItemInterfaceFactory $sourceItem
     )
-
 
     {
         parent::__construct();
@@ -63,30 +61,22 @@ class Import extends Command
         $this->sourceItem = $sourceItem;
     }
 
-
     protected
     function execute(InputInterface $input, OutputInterface $output)
     {
         $fileName = $input->getOption(self::FILE);
-        $serialized = $input->getOption(self::SERIALIZED);
-        $value = $input->getOption(self::VALUE);
-
+        $addData = $input->getOption(self::ADDDATA);
         $moduleEtcPath = $this->reader->getModuleDir(
             \Magento\Framework\Module\Dir::MODULE_ETC_DIR,
             'Academy_ImportCommand'
         );
-
         $fullFileName = $moduleEtcPath . '/' . $fileName;
         $exist = ($this->file->isExists($fullFileName));
         if ($exist) {
             $fileContent = $this->file->fileGetContents($fullFileName);
-            $unserializedData = $this->json->unserialize($fileContent);
-            $keys_array = array_keys($unserializedData['allProducts']['product1']);
-            $isExisting = (in_array("$value", $keys_array));
         }
 
         try {
-
             $output->writeln("\n<info>You are looking for $fileName \n</info>");
             $output->writeln("Full path to file: $fullFileName\n");
 
@@ -95,49 +85,46 @@ class Import extends Command
                 $output->writeln("<info>File content: \n </info>" . $fileContent);
             } else {
                 $output->writeln('<error>FILE DOES NOT EXIST</error>');
+                echo "\n";
             }
 
-            if ($serialized && $exist) {
-                $output->writeln("<info>Unserialized data: </info>");
-
-                var_dump($unserializedData) . "\n";
-            }
-
-            if ($value && $isExisting) {
-                $unserializedData = $this->json->unserialize($fileContent);
-                $output->writeln("\nvalue of $value is " . $unserializedData['allProducts']['product1']["$value"]);
-
+            if ($addData && $exist) {
+                $output->writeln("<info>Adding products to database process starts\n</info>");
                 $productData = $this->json->unserialize($fileContent);
 
                 $this->createProduct($productData['allProducts']);
+                $output->writeln("<info>Adding process done</info>\n");
             }
+
         } catch (FileSystemException $e) {
-            echo $e;
+            echo "Error: " . $e->getMessage();
         }
     }
 
     private
     function createProduct(array $productData)
     {
-        echo "\nAdding product\n";
-
-        var_dump($productData);
-
         $this->state->setAreaCode(Area::AREA_ADMINHTML);
         $this->storeManager->setCurrentStore($this->storeManager->getDefaultStoreView()->getWebsiteId());
 
-//        $product = $this->productFactory->create();
-//
-//        $product->setName($productData['product']['name'])
-//            ->setTypeId(Type::TYPE_SIMPLE)
-//            ->setAttributeSetId($productData['product']['attribute_set_id'])
-//            ->setSku($productData['product']['sku'])
-//            ->setVisibility($productData['product']['visibility'])
-//            ->setPrice($productData['product']['price'])
-//            ->setStatus($productData['product']['status'])
-//            ->setWebsiteIds(array(1));
-//
-//        $this->resourceModel->save($product);
+        foreach ($productData as $eachProduct) {
+            $productName = $eachProduct['name'];
+            echo "Adding $productName...\n";
+
+            $product = $this->productFactory->create();
+
+            $product->setName($eachProduct['name'])
+                ->setTypeId(Type::TYPE_SIMPLE)
+                ->setAttributeSetId($eachProduct['attribute_set_id'])
+                ->setSku($eachProduct['sku'])
+                ->setVisibility($eachProduct['visibility'])
+                ->setPrice($eachProduct['price'])
+                ->setStatus($eachProduct['status'])
+                ->setWebsiteIds(array(1));
+
+            $this->resourceModel->save($product);
+        }
+        echo "\n";
     }
 
     protected function configure()
@@ -151,16 +138,10 @@ class Import extends Command
             'File'
         );
         $this->addOption(
-            self::SERIALIZED,
+            self::ADDDATA,
             null,
             InputOption::VALUE_NONE,
-            'Serialized'
-        );
-        $this->addOption(
-            self::VALUE,
-            null,
-            InputOption::VALUE_OPTIONAL,
-            'Value'
+            'addData'
         );
         parent::configure();
     }

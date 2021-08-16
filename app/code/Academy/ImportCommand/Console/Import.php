@@ -73,6 +73,7 @@ class Import extends Command
         );
         $fullFileName = $moduleEtcPath . '/' . $fileName;
         $exist = ($this->file->isExists($fullFileName));
+        
         if ($exist) {
             $fileContent = $this->file->fileGetContents($fullFileName);
         }

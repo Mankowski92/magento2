@@ -21,20 +21,21 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class Import extends Command
 {
-    const FILE = 'file';
-    const ADDDATA = 'addData';
+    private const FILE = 'file';
+    private const ADDDATA = 'addData';
 
-    protected $reader;
-    protected $file;
-    protected $json;
-    protected $fileName = null;
-    protected $addData = null;
-    protected $productFactory;
-    protected $resourceModel;
-    protected $state;
-    protected $storeManager;
-    protected $sourceItemsSaveInterface;
-    protected $sourceItem;
+    protected Reader $reader;
+    protected File $file;
+    protected Json $json;
+    protected string $fileName = "";
+    protected int $addData = 0;
+    protected ProductFactory $productFactory;
+    protected Product $resourceModel;
+    protected State $state;
+    protected StoreManagerInterface $storeManager;
+    protected SourceItemInterface $sourceItemsSaveInterface;
+    protected SourceItemInterfaceFactory $sourceItem;
+
 
     public function __construct(
         Json                       $json,
@@ -95,7 +96,6 @@ class Import extends Command
                 $this->createProduct($productData['allProducts']);
                 $output->writeln("<info>Adding process done</info>\n");
             }
-
         } catch (FileSystemException $e) {
             echo "Error: " . $e->getMessage();
         }
@@ -110,7 +110,7 @@ class Import extends Command
         foreach ($productData as $eachProduct) {
             $productName = $eachProduct['name'];
             $imagePath = "/var/www/html/pub/media/custom_products_images/" . $eachProduct['imagePath'];
-            
+
             echo "Adding $productName...\n";
 
             $product = $this->productFactory->create();

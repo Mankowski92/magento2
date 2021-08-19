@@ -6,10 +6,11 @@
       "attribute_set_id": 4,
       "price": 25,
       "status": 1,
-      "visibility": 1,
+      "visibility": 4,
       "type_id": "simple",
       "weight": "0.5",
-      "imagePath": "img1.jpeg"
+      "imagePath": "img1.jpeg",
+      "option": "Extreme"
     },
     "product2": {
       "sku": "TEST-002",
@@ -17,10 +18,11 @@
       "attribute_set_id": 4,
       "price": 50,
       "status": 1,
-      "visibility": 1,
+      "visibility": 4,
       "type_id": "simple",
       "weight": "0.5",
-      "imagePath": "img2.jpeg"
+      "imagePath": "img2.jpeg",
+      "option": "Insane"
     },
     "product3": {
       "sku": "TEST-003",
@@ -28,10 +30,11 @@
       "attribute_set_id": 4,
       "price": 110,
       "status": 1,
-      "visibility": 1,
+      "visibility": 4,
       "type_id": "simple",
       "weight": "0.5",
-      "imagePath": "img3.jpeg"
+      "imagePath": "img3.jpeg",
+      "option": "Mega"
     },
     "product4": {
       "sku": "TEST-004",
@@ -39,10 +42,11 @@
       "attribute_set_id": 4,
       "price": 70,
       "status": 1,
-      "visibility": 1,
+      "visibility": 4,
       "type_id": "simple",
       "weight": "0.5",
-      "imagePath": "img4.jpeg"
+      "imagePath": "img4.jpeg",
+      "option": "Hyper"
     }
   }
 }

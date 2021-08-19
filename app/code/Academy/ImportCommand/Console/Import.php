@@ -5,13 +5,19 @@ namespace Academy\ImportCommand\Console;
 use Magento\Catalog\Model\Product\Type;
 use Magento\Catalog\Model\ProductFactory;
 use Magento\Catalog\Model\ResourceModel\Product;
+use Magento\CatalogImportExport\Model\Import\Proxy\Product\ResourceModel;
 use Magento\Framework\App\Area;
 use Magento\Framework\App\State;
+use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\FileSystemException;
+use Magento\Framework\Exception\InputException;
 use Magento\Framework\Filesystem\Driver\File;
 use Magento\Framework\Module\Dir\Reader;
 use Magento\Framework\Serialize\Serializer\Json;
+use Magento\Framework\Validation\ValidationException;
+use Magento\Inventory\Model\SourceItem;
 use Magento\InventoryApi\Api\Data\SourceItemInterface;
+use Magento\InventoryApi\Api\SourceItemsSaveInterface;
 use Magento\InventoryApi\Api\Data\SourceItemInterfaceFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Symfony\Component\Console\Command\Command;
@@ -24,18 +30,18 @@ class Import extends Command
     private const FILE = 'file';
     private const ADDDATA = 'addData';
 
+    protected string $fileName = '';
+    protected int $addData = 0;
+
     protected Reader $reader;
     protected File $file;
     protected Json $json;
-    protected string $fileName = "";
-    protected int $addData = 0;
     protected ProductFactory $productFactory;
-    protected Product $resourceModel;
+    protected ResourceModel $resourceModel;
     protected State $state;
     protected StoreManagerInterface $storeManager;
-    protected SourceItemInterface $sourceItemsSaveInterface;
+    protected SourceItemsSaveInterface $sourceItemsSaveInterface;
     protected SourceItemInterfaceFactory $sourceItem;
-
 
     public function __construct(
         Json                       $json,
@@ -44,11 +50,10 @@ class Import extends Command
         ProductFactory             $productFactory,
         State                      $state,
         StoreManagerInterface      $storeManager,
-        Product                    $resourceModel,
-        SourceItemInterface        $sourceItemsSaveInterface,
+        ResourceModel              $resourceModel,
+        SourceItemsSaveInterface   $sourceItemsSaveInterface,
         SourceItemInterfaceFactory $sourceItem
     )
-
     {
         parent::__construct();
         $this->reader = $reader;
@@ -60,10 +65,11 @@ class Import extends Command
         $this->resourceModel = $resourceModel;
         $this->sourceItemsSaveInterface = $sourceItemsSaveInterface;
         $this->sourceItem = $sourceItem;
+
     }
 
-    protected
-    function execute(InputInterface $input, OutputInterface $output)
+
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $fileName = $input->getOption(self::FILE);
         $addData = $input->getOption(self::ADDDATA);
@@ -73,7 +79,7 @@ class Import extends Command
         );
         $fullFileName = $moduleEtcPath . '/' . $fileName;
         $exist = ($this->file->isExists($fullFileName));
-        
+
         if ($exist) {
             $fileContent = $this->file->fileGetContents($fullFileName);
         }
@@ -98,19 +104,26 @@ class Import extends Command
                 $output->writeln("<info>Adding process done</info>\n");
             }
         } catch (FileSystemException $e) {
-            echo "Error: " . $e->getMessage();
+            $output->writeln('Error: ' . $e->getMessage());
         }
+
     }
 
-    private
-    function createProduct(array $productData)
+
+    /**
+     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Exception
+     */
+    private function createProduct(array $productData)
     {
         $this->state->setAreaCode(Area::AREA_ADMINHTML);
         $this->storeManager->setCurrentStore($this->storeManager->getDefaultStoreView()->getWebsiteId());
 
+        $sourceItems = [];
+
         foreach ($productData as $eachProduct) {
             $productName = $eachProduct['name'];
-            $imagePath = "/var/www/html/pub/media/custom_products_images/" . $eachProduct['imagePath'];
+            $imagePath = '/var/www/html/pub/media/custom_products_images/' . $eachProduct['imagePath'];
 
             echo "Adding $productName...\n";
 
@@ -124,11 +137,27 @@ class Import extends Command
                 ->setPrice($eachProduct['price'])
                 ->setStatus($eachProduct['status'])
                 ->addImageToMediaGallery($imagePath, ['image', 'small_image', 'thumbnail'], false, false)
-                ->setWebsiteIds(array(1));
+                ->setWebsiteIds([1])
+                ->setCategoryIds([3, 6])
+                ->setCustomAttribute(
+                    'awesome_level',
+                    $eachProduct['option']
+                );
 
             $this->resourceModel->save($product);
+
+            $sourceItem = $this->sourceItem->create();
+            $sourceItem->setSourceCode('default');
+            $sourceItem->setQuantity(100);
+            $sourceItem->setSku($eachProduct['sku']);
+            $sourceItem->setStatus(SourceItemInterface::STATUS_IN_STOCK);
         }
-        echo "\n";
+
+        try {
+            $this->sourceItemsSaveInterface->execute([$sourceItems]);
+        } catch (CouldNotSaveException | InputException | ValidationException $e) {
+            echo "Exception: " . $e->getMessage();
+        }
     }
 
     protected function configure()
@@ -148,5 +177,8 @@ class Import extends Command
             'addData'
         );
         parent::configure();
+
     }
 }
+
+

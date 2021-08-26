@@ -1,6 +1,6 @@
 {
-  "name": "academy/add-attribute",
-  "version": "0.0.1",
+  "name": "academy/event-and-observer",
+  "version": "1.0.0",
   "description": "N/A",
   "type": "magento2-module",
   "require": {
@@ -14,7 +14,7 @@
       "registration.php"
     ],
     "psr-4": {
-      "Academy\\AddAttribute\\": ""
+      "Academy\\EventAndObserver\\": ""
     }
   }
 }

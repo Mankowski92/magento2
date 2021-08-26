@@ -43,6 +43,8 @@ class Import extends Command
     protected SourceItemsSaveInterface $sourceItemsSaveInterface;
     protected SourceItemInterfaceFactory $sourceItem;
 
+    protected $sourceItemFactory;
+
     public function __construct(
         Json                       $json,
         Reader                     $reader,
@@ -53,6 +55,8 @@ class Import extends Command
         ResourceModel              $resourceModel,
         SourceItemsSaveInterface   $sourceItemsSaveInterface,
         SourceItemInterfaceFactory $sourceItem
+
+//        SourceItemInterfaceFactory $sourceItemFactory
     )
     {
         parent::__construct();
@@ -151,12 +155,12 @@ class Import extends Command
             $sourceItem->setQuantity(100);
             $sourceItem->setSku($eachProduct['sku']);
             $sourceItem->setStatus(SourceItemInterface::STATUS_IN_STOCK);
-        }
 
-        try {
-            $this->sourceItemsSaveInterface->execute([$sourceItems]);
-        } catch (CouldNotSaveException | InputException | ValidationException $e) {
-            echo "Exception: " . $e->getMessage();
+            try {
+                $this->sourceItemsSaveInterface->execute([$sourceItem]);
+            } catch (CouldNotSaveException | InputException | ValidationException $e) {
+                echo "Exception: " . $e->getMessage();
+            }
         }
     }
 

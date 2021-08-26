@@ -8,6 +8,7 @@
  * Tests to find various obsolete code usage
  * (deprecated and removed Magento 1 legacy methods, properties, classes, etc.)
  */
+
 namespace Magento\Test\Legacy;
 
 use Magento\Framework\App\Utility\AggregateInvoker;
@@ -355,7 +356,7 @@ class ObsoleteCodeTest extends \PHPUnit\Framework\TestCase
     protected function _testGetOptionsSpecialCase($content)
     {
         $this->_assertNotRegexp(
-            '/getOptions\(\)\s*->get(Base|App|Code|Design|Etc|Lib|Locale|Js|Media' .
+            '/getOptions\(\)\s*->get(Base|App|Code|Design|Etc|Lib|Locale|JsSimpleModule|Media' .
             '|Var|Tmp|Cache|Log|Session|Upload|Export)?Dir\(/S',
             $content,
             'The class \Magento\Core\Model\Config\Options is obsolete. '
@@ -564,7 +565,8 @@ class ObsoleteCodeTest extends \PHPUnit\Framework\TestCase
         $constant,
         $replacement,
         $class
-    ) {
+    )
+    {
         $constantRegexFull = '/\b(?P<constPart>((?P<classWithConst>([a-zA-Z0-9_' . preg_quote('\\') . ']*))('
             . preg_quote('::') . ')*' . '(' . $constantRegex . '\b)))(\s*|;)/';
         $matchConstant = preg_match_all($constantRegexFull, $content, $matchConstantString);
@@ -618,7 +620,8 @@ class ObsoleteCodeTest extends \PHPUnit\Framework\TestCase
         $matchConstantString,
         $matchClassString,
         $class
-    ) {
+    )
+    {
         $foundProperUse = false;
         $foundAsComponent = false;
         $asComponent = $matchClassString['classAlias'];
@@ -662,7 +665,8 @@ class ObsoleteCodeTest extends \PHPUnit\Framework\TestCase
         $matchConstantString,
         $matchClassString,
         $class
-    ) {
+    )
+    {
         $foundProperUse = false;
         foreach ($matchConstantString['constPart'] as $constantMatch) {
             $foundProperUse = $this->_checkCompletePathOfClass(
@@ -697,7 +701,8 @@ class ObsoleteCodeTest extends \PHPUnit\Framework\TestCase
         $class,
         $foundAsComponent = false,
         $asComponent = ''
-    ) {
+    )
+    {
         $temp = explode('::', $constantMatch);
         $pathWithConst = trim(ltrim(str_replace('\\\\', '\\', $temp[0]), '\\'));
         if ($pathWithConst === $class) {
@@ -756,7 +761,8 @@ class ObsoleteCodeTest extends \PHPUnit\Framework\TestCase
         $matchClassString,
         $class,
         $foundAsComponent
-    ) {
+    )
+    {
         if ($pathInUseNamespaceTruncated === $pathInUseNamespace && $pathInUseNamespaceTruncated !== $class
             && ($foundAsComponent || (strpos($matchClassString['useOrNamespace'], 'namespace') !== false))) {
             return true;
@@ -781,7 +787,8 @@ class ObsoleteCodeTest extends \PHPUnit\Framework\TestCase
         $pathWithConst,
         $class,
         $foundAsComponent
-    ) {
+    )
+    {
         if ((($pathInUseNamespaceTruncated . '\\' . $pathWithConst === $class)
                 && ($pathInUseNamespaceTruncated !== $pathInUseNamespace) && !$foundAsComponent)
             || (($pathInUseNamespaceTruncated === $class) && (strpos($pathWithConst, '\\') === false)
@@ -901,11 +908,11 @@ class ObsoleteCodeTest extends \PHPUnit\Framework\TestCase
 
         $invoker = new AggregateInvoker($this);
         $invoker(
-            /**
-             * Check absence of obsolete Mage class usages
-             *
-             * @param string $file
-             */
+        /**
+         * Check absence of obsolete Mage class usages
+         *
+         * @param string $file
+         */
             function ($file) {
                 $this->_assertNotRegExp(
                     '/[^a-z\d_]Mage\s*::/i',

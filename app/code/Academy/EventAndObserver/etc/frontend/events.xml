@@ -5,6 +5,6 @@
         <observer name="customprice" instance="Academy\EventAndObserver\Observer\Product\CustomPrice"/>
     </event>
     <event name="js_event">
-        <observer name="JsonObserver" instance="Academy\EventAndObserver\Observer\Product\JsonObserver"/>
+        <observer name="MyObserver" instance="Academy\EventAndObserver\Observer\Product\MyObserver"/>
     </event>
 </config>

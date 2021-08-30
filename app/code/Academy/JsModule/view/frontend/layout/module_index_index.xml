@@ -3,7 +3,6 @@
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
         <css src="Academy_JsModule::css/mycss.css"/>
-        <!--        <script src="Vendor_Module::js/myjs.js"/>-->
     </head>
     <body>
         <referenceContainer name="content">

@@ -4,7 +4,8 @@
                for="json_out"><span><?php echo $block->escapeHtml(__('Output')) ?></span></label>
         <div class="input-box control">
             <input name="json_out" id="json_out" title="<?php echo $block->escapeHtml(__('Output')) ?>"
-                   value="Put value here" class="input-text required-entry" type="text">
+                   value='Put valid json here, e.g. {"a":1,"b":2,"c":3,"d":4,"e":5}' class="input-text required-entry"
+                   type="text">
         </div>
     </div>
     <div class="field">
@@ -23,7 +24,7 @@
         ) {
             $('body').on('click', '.btn_put_json', function () {
 
-                var url = "<?php echo $block->getUrl() . 'module/Index/ReturnJson' ?>";
+                var url = "<?php echo $block->getUrl() . 'module/Index/Debug' ?>";
                 var value = $("input[name='json_out']").val()
 
                 try {

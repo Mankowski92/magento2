@@ -10,7 +10,7 @@
  * Files that temporary excluded from results
  */
 return [
-    ['Magento_Backend', 'Model/view.php'],
+    ['Magento_Backend', 'Model/View.php'],
     ['Magento_Backend', 'App/AbstractAction.php'],
     ['Magento_Backend', 'App/Response/Http/FileFactory.php'],
     ['Magento_Backend', 'Block/Widget.php'],

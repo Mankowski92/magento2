@@ -3,7 +3,6 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Magento\Framework\View\Layout;
 
 use Magento\Framework\App\State;
@@ -286,7 +285,7 @@ class MergeTest extends \PHPUnit\Framework\TestCase
     {
         $cacheValue = [
             "pageLayout" => "1column",
-            "layout" => self::FIXTURE_LAYOUT_XML
+            "layout"     => self::FIXTURE_LAYOUT_XML
         ];
 
         $this->_cache->expects($this->at(0))->method('load')
@@ -345,7 +344,7 @@ class MergeTest extends \PHPUnit\Framework\TestCase
         $this->_model->load();
         $expected = [
             'content' => 'Main Content Area',
-            'product.info.extrahint' => 'Product view Extra Hint',
+            'product.info.extrahint' => 'Product View Extra Hint',
             'product.info.configurable.extra' => 'Configurable Product Extra Info',
         ];
         $this->assertEquals($expected, $this->_model->getContainers());

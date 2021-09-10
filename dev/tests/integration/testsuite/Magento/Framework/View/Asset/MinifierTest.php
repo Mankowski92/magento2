@@ -3,7 +3,6 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Magento\Framework\View\Asset;
 
 use Exception;
@@ -33,7 +32,7 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 /**
  * Tests for minifier
  *
- * @magentoComponentsDir Magento/Framework/view/_files/static/theme
+ * @magentoComponentsDir Magento/Framework/View/_files/static/theme
  * @magentoDbIsolation enabled
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */

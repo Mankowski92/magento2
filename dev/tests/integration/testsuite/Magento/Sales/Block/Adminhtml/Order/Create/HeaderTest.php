@@ -3,7 +3,6 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Magento\Sales\Block\Adminhtml\Order\Create;
 
 use Magento\TestFramework\Helper\Bootstrap;
@@ -48,10 +47,10 @@ class HeaderTest extends \PHPUnit\Framework\TestCase
             'Customer and store' => [
                 $customerIdFromFixture,
                 $defaultStoreView,
-                'Create New Order for John Smith in Default Store view',
+                'Create New Order for John Smith in Default Store View',
             ],
             'No store' => [$customerIdFromFixture, null, 'Create New Order for John Smith'],
-            'No customer' => [null, $defaultStoreView, 'Create New Order in Default Store view'],
+            'No customer' => [null, $defaultStoreView, 'Create New Order in Default Store View'],
             'No customer, no store' => [null, null, 'Create New Order for New Customer']
         ];
     }

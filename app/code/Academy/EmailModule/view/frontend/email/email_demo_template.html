@@ -1,0 +1,10 @@
+{{template config_path="design/email/header_template"}}
+<!--@subject Hello From the other side  @-->
+<table>
+    <tr>{{trans "Please check this: %templateVar." templateVar=$templateVar}}</tr>
+<br/><br/>
+    <tr>{{var product}}</tr>
+    <br/>
+    <tr>{{var price}}</tr>
+</table>
+{{template config_path="design/email/footer_template"}}

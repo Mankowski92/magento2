@@ -238,9 +238,8 @@ class PhpRuleTest extends \PHPUnit\Framework\TestCase
     public function testGetDependencyInfoCaseGetUrl(
         string $class,
         string $content,
-        array  $expected
-    )
-    {
+        array $expected
+    ) {
         $file = $this->makeMockFilepath($class);
         $module = $this->getModuleFromClass($class);
 
@@ -297,12 +296,12 @@ class PhpRuleTest extends \PHPUnit\Framework\TestCase
             ],
             'getUrl from wildcard url within ignored Block class' => [
                 'Magento\Cms\Block\SomeClass',
-                '$this->getUrl("Catalog/*/view")',
+                '$this->getUrl("Catalog/*/View")',
                 []
             ],
             'getUrl from wildcard url within ignored Model file' => [
                 'Magento\Cms\Model\SomeClass',
-                '$this->getUrl("Catalog/*/view")',
+                '$this->getUrl("Catalog/*/View")',
                 []
             ],
             'getUrl with in admin controller for controllerName wildcard' => [
@@ -323,9 +322,8 @@ class PhpRuleTest extends \PHPUnit\Framework\TestCase
     public function testGetDependencyInfoCaseTemplateGetUrl(
         string $template,
         string $content,
-        array  $expected
-    )
-    {
+        array $expected
+    ) {
         $module = $this->getModuleFromClass($template);
 
         $this->assertEquals($expected, $this->model->getDependencyInfo($module, 'php', $template, $content));
@@ -336,7 +334,7 @@ class PhpRuleTest extends \PHPUnit\Framework\TestCase
      */
     public function getDependencyInfoDataCaseGetTemplateUrlDataProvider()
     {
-        return ['getUrl from ignore template' => [
+        return [ 'getUrl from ignore template' => [
             'app/code/Magento/Backend/view/adminhtml/templates/dashboard/totalbar/script.phtml',
             '$getUrl("adminhtml/*/ajaxBlock")',
             []]];
@@ -351,9 +349,8 @@ class PhpRuleTest extends \PHPUnit\Framework\TestCase
     public function testProcessWildcardUrl(
         string $class,
         string $content,
-        array  $expected
-    )
-    {
+        array $expected
+    ) {
         $routeMapper = $this->createMock(RouteMapper::class);
         $routeMapper->expects($this->once())
             ->method('getDependencyByRoutePath')
@@ -395,11 +392,11 @@ class PhpRuleTest extends \PHPUnit\Framework\TestCase
             'adminhtml wildcard controller route' => [
                 'Magento\Backend\Controller\Adminhtml\System\Store\DeleteStore',
                 '$this->getUrl("adminhtml/*/deleteStorePost")',
-                [
-                    'route_id' => 'adminhtml',
-                    'controller_name' => 'system_store',
-                    'action_name' => 'deletestorepost'
-                ]
+                    [
+                        'route_id' => 'adminhtml',
+                        'controller_name' => 'system_store',
+                        'action_name' => 'deletestorepost'
+                    ]
             ],
             'index wildcard' => [
                 'Magento\Backend\Controller\System\Store\DeleteStore',
@@ -421,11 +418,10 @@ class PhpRuleTest extends \PHPUnit\Framework\TestCase
      * @dataProvider getDependencyInfoDataCaseGetUrlExceptionDataProvider
      */
     public function testGetDependencyInfoCaseGetUrlException(
-        string     $class,
-        string     $content,
+        string $class,
+        string $content,
         \Exception $expected
-    )
-    {
+    ) {
         $file = $this->makeMockFilepath($class);
         $module = $this->getModuleFromClass($class);
         $this->expectExceptionObject($expected);
@@ -523,27 +519,27 @@ class PhpRuleTest extends \PHPUnit\Framework\TestCase
      */
     private function makeWebApiConfigReaderMock()
     {
-        $services = ['routes' => [
+        $services = [ 'routes' => [
             '/V1/products/:sku' => [
                 'GET' => ['service' => [
                     'class' => 'Magento\Catalog\Api\ProductRepositoryInterface',
                     'method' => 'get'
-                ]],
+                ] ],
                 'PUT' => ['service' => [
                     'class' => 'Magento\Catalog\Api\ProductRepositoryInterface',
                     'method' => 'save'
-                ]],
+                ] ],
             ],
             '/V1/products/:sku/options' => ['GET' => ['service' => [
                 'class' => 'Magento\Catalog\Api\ProductCustomOptionRepositoryInterface',
                 'method' => 'getList'
-            ]]],
+            ] ] ],
             '/V1/products' => ['GET' => ['service' => [
                 'class' => 'Magento\Catalog\Api\ProductCustomOptionRepositoryInterface',
                 'method' => 'getList'
-            ]]]
-        ]];
+            ] ] ]
+        ] ];
 
-        return $this->createConfiguredMock(Filesystem::class, ['read' => $services]);
+        return $this->createConfiguredMock(Filesystem::class, [ 'read' => $services ]);
     }
 }

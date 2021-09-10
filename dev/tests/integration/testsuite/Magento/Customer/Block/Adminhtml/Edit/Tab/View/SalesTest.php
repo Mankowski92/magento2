@@ -3,14 +3,13 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Magento\Customer\Block\Adminhtml\Edit\Tab\View;
 
 use Magento\Customer\Controller\RegistryConstants;
 use Magento\TestFramework\Helper\Bootstrap;
 
 /**
- * Test for \Magento\Customer\Block\Adminhtml\Edit\Tab\view\Sales
+ * Test for \Magento\Customer\Block\Adminhtml\Edit\Tab\View\Sales
  *
  * @magentoAppArea adminhtml
  */

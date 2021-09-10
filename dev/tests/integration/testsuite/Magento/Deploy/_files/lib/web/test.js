@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-function test() {
+function test()
+{
     return 'test function';
 }

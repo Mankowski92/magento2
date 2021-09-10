@@ -47,7 +47,7 @@ if (!$store->getId()) {
         'code' => 'second_store_view',
         'website_id' => $websiteId,
         'group_id' => $groupId,
-        'name' => 'Second Store view',
+        'name' => 'Second Store View',
         'sort_order' => 10,
         'is_active' => 1,
     ]);

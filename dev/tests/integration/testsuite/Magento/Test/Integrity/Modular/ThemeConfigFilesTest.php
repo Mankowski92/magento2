@@ -5,7 +5,6 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Magento\Test\Integrity\Modular;
 
 use Magento\Framework\Component\ComponentRegistrar;
@@ -40,6 +39,6 @@ class ThemeConfigFilesTest extends \Magento\TestFramework\TestCase\AbstractConfi
     protected function _getXsdPath()
     {
         return $this->componentRegistrar->getPath(ComponentRegistrar::LIBRARY, 'magento/framework')
-            . '/view/PageLayout/etc/layouts.xsd';
+            . '/View/PageLayout/etc/layouts.xsd';
     }
 }

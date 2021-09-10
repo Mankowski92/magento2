@@ -3,11 +3,10 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Magento\Sales\Block\Adminhtml\Order\View;
 
 /**
- * Test class for \Magento\Sales\Block\Adminhtml\Order\view\Info
+ * Test class for \Magento\Sales\Block\Adminhtml\Order\View\Info
  */
 class InfoTest extends \Magento\TestFramework\TestCase\AbstractBackendController
 {

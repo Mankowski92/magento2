@@ -4,7 +4,6 @@
  * See COPYING.txt for license details.
  *
  */
-
 namespace Magento\Integration\Block\Adminhtml\Widget\Grid\Column\Renderer\Button;
 
 use Magento\Integration\Model\Integration;
@@ -39,7 +38,7 @@ class EditTest extends \PHPUnit\Framework\TestCase
         $integration = $this->getFixtureIntegration();
         $buttonHtml = $this->editButtonBlock->render($integration);
         $this->assertStringContainsString('title="Edit"', $buttonHtml);
-        $this->assertStringContainsString('class="' . $this->editButtonBlock->escapeHtmlAttr('action edit') . '"', $buttonHtml);
+        $this->assertStringContainsString('class="' .$this->editButtonBlock->escapeHtmlAttr('action edit') .'"', $buttonHtml);
         $this->assertStringContainsString(
             'window.location.href=\'http://localhost/index.php/backend/admin/integration/edit/id/'
             . $integration->getId(),
@@ -52,8 +51,8 @@ class EditTest extends \PHPUnit\Framework\TestCase
         $integration = $this->getFixtureIntegration();
         $integration->setSetupType(Integration::TYPE_CONFIG);
         $buttonHtml = $this->editButtonBlock->render($integration);
-        $this->assertStringContainsString('title="view"', $buttonHtml);
-        $this->assertStringContainsString('class="' . $this->editButtonBlock->escapeHtmlAttr('action info') . '"', $buttonHtml);
+        $this->assertStringContainsString('title="View"', $buttonHtml);
+        $this->assertStringContainsString('class="' .$this->editButtonBlock->escapeHtmlAttr('action info') .'"', $buttonHtml);
     }
 
     /**

@@ -3,7 +3,6 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Magento\Customer\Block\Adminhtml\Edit\Tab;
 
 use Magento\Customer\Api\CustomerRepositoryInterface;
@@ -11,7 +10,7 @@ use Magento\Customer\Api\Data\CustomerInterfaceFactory;
 use Magento\Customer\Controller\RegistryConstants;
 
 /**
- * Magento\Customer\Block\Adminhtml\Edit\Tab\view
+ * Magento\Customer\Block\Adminhtml\Edit\Tab\View
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  * @magentoAppArea adminhtml
@@ -82,12 +81,12 @@ class ViewTest extends \PHPUnit\Framework\TestCase
 
     public function testGetTabLabel()
     {
-        $this->assertEquals(__('Customer view'), $this->_block->getTabLabel());
+        $this->assertEquals(__('Customer View'), $this->_block->getTabLabel());
     }
 
     public function testGetTabTitle()
     {
-        $this->assertEquals(__('Customer view'), $this->_block->getTabTitle());
+        $this->assertEquals(__('Customer View'), $this->_block->getTabTitle());
     }
 
     /**
@@ -134,7 +133,7 @@ class ViewTest extends \PHPUnit\Framework\TestCase
             'email@email.com'
         );
         $data = ['account' => $this->_dataObjectProcessor
-            ->buildOutputDataArray($customer, \Magento\Customer\Api\Data\CustomerInterface::class),];
+            ->buildOutputDataArray($customer, \Magento\Customer\Api\Data\CustomerInterface::class), ];
         $this->_context->getBackendSession()->setCustomerData($data);
         return $customer;
     }
@@ -147,7 +146,7 @@ class ViewTest extends \PHPUnit\Framework\TestCase
         /** @var \Magento\Customer\Api\Data\CustomerInterface $customer */
         $customer = $this->_customerRepository->getById(1);
         $data = ['account' => $this->_dataObjectProcessor
-            ->buildOutputDataArray($customer, \Magento\Customer\Api\Data\CustomerInterface::class),];
+            ->buildOutputDataArray($customer, \Magento\Customer\Api\Data\CustomerInterface::class), ];
         $this->_context->getBackendSession()->setCustomerData($data);
         $this->_coreRegistry->register(RegistryConstants::CURRENT_CUSTOMER_ID, $customer->getId());
         return $customer;

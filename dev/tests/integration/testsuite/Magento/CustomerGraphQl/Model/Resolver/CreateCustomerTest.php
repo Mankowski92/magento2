@@ -151,7 +151,7 @@ QUERY;
         $customer = $this->customerRepository->get('test@magento.com');
         $this->assertEquals('Test', $customer->getFirstname());
         $this->assertEquals('Magento', $customer->getLastname());
-        $this->assertEquals('Test Store view', $customer->getCreatedIn());
+        $this->assertEquals('Test Store View', $customer->getCreatedIn());
 
         $store = $this->storeRepository->getById($customer->getStoreId());
         $this->assertEquals('test_store_view', $store->getCode());
@@ -216,7 +216,7 @@ QUERY;
         $customer = $this->customerRepository->get('test@magento.com');
         $this->assertEquals('Test', $customer->getFirstname());
         $this->assertEquals('Magento', $customer->getLastname());
-        $this->assertEquals('Test Store view', $customer->getCreatedIn());
+        $this->assertEquals('Test Store View', $customer->getCreatedIn());
 
         $store = $this->storeRepository->getById($customer->getStoreId());
         $this->assertEquals('test_store_view', $store->getCode());

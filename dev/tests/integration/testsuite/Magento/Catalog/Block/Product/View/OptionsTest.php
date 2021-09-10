@@ -3,11 +3,10 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Magento\Catalog\Block\Product\View;
 
 /**
- * Test class for \Magento\Catalog\Block\Product\view\Options.
+ * Test class for \Magento\Catalog\Block\Product\View\Options.
  */
 class OptionsTest extends \PHPUnit\Framework\TestCase
 {

@@ -3,7 +3,6 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Magento\UrlRewrite\Block\Cms\Page\Edit;
 
 /**
@@ -38,7 +37,7 @@ class FormTest extends \PHPUnit\Framework\TestCase
     /**
      * Check _formPostInit set expected fields values
      *
-     * @covers       \Magento\UrlRewrite\Block\Cms\Page\Edit\Form::_formPostInit
+     * @covers \Magento\UrlRewrite\Block\Cms\Page\Edit\Form::_formPostInit
      *
      * @dataProvider formPostInitDataProvider
      *
@@ -82,7 +81,7 @@ class FormTest extends \PHPUnit\Framework\TestCase
             ['label' => 'Main Website', 'value' => [], '__disableTmpl' => true],
             [
                 'label' => '    Main Website Store',
-                'value' => [['label' => '    Default Store view', 'value' => 1]],
+                'value' => [['label' => '    Default Store View', 'value' => 1]],
                 '__disableTmpl' => true
             ],
         ];

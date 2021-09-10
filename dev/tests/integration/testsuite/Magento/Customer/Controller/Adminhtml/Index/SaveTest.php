@@ -520,7 +520,7 @@ class SaveTest extends AbstractBackendController
                 'customer' => [
                     CustomerData::DOB => '2000-01-01',
                     CustomerData::STORE_ID => 1,
-                    CustomerData::CREATED_IN => 'Default Store view',
+                    CustomerData::CREATED_IN => 'Default Store View',
                 ],
             ]
         );
@@ -553,10 +553,9 @@ class SaveTest extends AbstractBackendController
      */
     private function assertCustomerData(
         string $customerEmail,
-        int    $customerWebsiteId,
-        array  $expectedData
-    ): void
-    {
+        int $customerWebsiteId,
+        array $expectedData
+    ): void {
         $this->customer = $this->customerRepository->get($customerEmail, $customerWebsiteId);
         $actualCustomerArray = $this->customer->__toArray();
         foreach ($expectedData['customer'] as $key => $expectedValue) {
@@ -582,8 +581,7 @@ class SaveTest extends AbstractBackendController
         int $websiteId,
         int $expectedStatus,
         int $expectedStoreId
-    ): void
-    {
+    ): void {
         $subscriber = $this->subscriberFactory->create();
         $subscriber->loadByCustomer($customerId, $websiteId);
         $this->assertNotEmpty($subscriber->getId());
@@ -603,13 +601,12 @@ class SaveTest extends AbstractBackendController
      * @return MockObject
      */
     private function prepareEmailMock(
-        int    $occurrenceNumber,
+        int $occurrenceNumber,
         string $templateId,
-        array  $sender,
-        int    $customerId,
-               $newEmail = null
-    ): MockObject
-    {
+        array $sender,
+        int $customerId,
+        $newEmail = null
+    ) : MockObject {
         $area = Area::AREA_FRONTEND;
         $customer = $this->customerRepository->getById($customerId);
         $storeId = $customer->getStoreId();
@@ -663,9 +660,8 @@ class SaveTest extends AbstractBackendController
      */
     private function addEmailMockToClass(
         MockObject $transportBuilderMock,
-                   $className
-    ): void
-    {
+        $className
+    ): void {
         $mocked = $this->_objectManager->create(
             $className,
             ['transportBuilder' => $transportBuilderMock]

@@ -3,7 +3,6 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Magento\Framework\View;
 
 use \Magento\TestFramework\Helper\Bootstrap;
@@ -54,7 +53,7 @@ class FileSystemTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @magentoComponentsDir Magento/Framework/view/_files/Fixture_Module
+     * @magentoComponentsDir Magento/Framework/View/_files/Fixture_Module
      */
     public function testGetViewFile()
     {

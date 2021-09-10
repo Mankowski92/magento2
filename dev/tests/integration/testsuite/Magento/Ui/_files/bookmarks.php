@@ -3,7 +3,6 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 use Magento\Ui\Api\Data\BookmarkInterface;
 use Magento\Ui\Model\Bookmark;
 
@@ -31,7 +30,7 @@ $bookmarks = [
         'identifier' => 'third',
         'current' => 1,
         'config' => '{}',
-        'title' => 'Default view'
+        'title' => 'Default View'
     ],
 ];
 

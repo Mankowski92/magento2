@@ -7,11 +7,10 @@
 /**
  * Layout integration tests
  *
- * Note that some methods are not covered here, see the \Magento\Framework\view\LayoutDirectivesTest
+ * Note that some methods are not covered here, see the \Magento\Framework\View\LayoutDirectivesTest
  *
  * @see \Magento\Framework\View\LayoutDirectivesTest
  */
-
 namespace Magento\Framework\View;
 
 /**
@@ -79,12 +78,12 @@ class LayoutTest extends \PHPUnit\Framework\TestCase
         )->method(
             'asSimplexml'
         )->willReturn(
-
-            simplexml_load_string(
-                '<layout><container name="container1"></container></layout>',
-                \Magento\Framework\View\Layout\Element::class
-            )
-
+            
+                simplexml_load_string(
+                    '<layout><container name="container1"></container></layout>',
+                    \Magento\Framework\View\Layout\Element::class
+                )
+            
         );
         $layout->expects($this->once())->method('getUpdate')->willReturn($merge);
         $this->assertEmpty($layout->getXpath('/layout/container[@name="container1"]'));
@@ -95,7 +94,7 @@ class LayoutTest extends \PHPUnit\Framework\TestCase
     /**
      * A smoke test for generating elements
      *
-     * See sophisticated tests at \Magento\Framework\view\LayoutDirectivesTest
+     * See sophisticated tests at \Magento\Framework\View\LayoutDirectivesTest
      * @see \Magento\Framework\View\LayoutDirectivesTest
      * @magentoAppIsolation enabled
      */

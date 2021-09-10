@@ -3,7 +3,6 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Magento\Ui\Api;
 
 use Magento\Ui\Model\ResourceModel\BookmarkRepository;
@@ -74,7 +73,7 @@ class BookmarkRepositoryTest extends \PHPUnit\Framework\TestCase
         /** @var \Magento\Ui\Api\Data\BookmarkSearchResultsInterface $result */
         $result = $this->repository->getList($searchCriteria);
         $this->assertCount(2, $result->getItems());
-        $this->assertEquals('Default view', $result->getItems()[0]->getTitle());
+        $this->assertEquals('Default View', $result->getItems()[0]->getTitle());
         $this->assertEquals('Bb', $result->getItems()[1]->getTitle());
     }
 }

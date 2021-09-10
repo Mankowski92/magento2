@@ -39,7 +39,7 @@ class Module implements
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($events);
 
-        // Override Laminas\Mvc\view\Http\InjectTemplateListener
+        // Override Laminas\Mvc\View\Http\InjectTemplateListener
         // to process templates by Vendor/Module
         $injectTemplateListener = new InjectTemplateListener();
         $sharedEvents->attach(
@@ -60,7 +60,7 @@ class Module implements
                 /** @var \Laminas\Http\Header\UserAgent $userAgentHeader */
                 $userAgentHeader = $e->getRequest()->getHeader('User-Agent');
                 $xssHeaderValue = $userAgentHeader && $userAgentHeader->getFieldValue()
-                && strpos($userAgentHeader->getFieldValue(), XssProtection::IE_8_USER_AGENT) === false
+                    && strpos($userAgentHeader->getFieldValue(), XssProtection::IE_8_USER_AGENT) === false
                     ? XssProtection::HEADER_ENABLED : XssProtection::HEADER_DISABLED;
                 $headers->addHeaderLine('X-XSS-Protection: ' . $xssHeaderValue);
             }
@@ -77,8 +77,6 @@ class Module implements
             include __DIR__ . '/../../../config/module.config.php',
             include __DIR__ . '/../../../config/router.config.php',
             include __DIR__ . '/../../../config/di.config.php',
-            include __DIR__ . '/../../../config/states.install.config.php',
-            include __DIR__ . '/../../../config/languages.config.php',
         );
         // phpcs:enable
         return $result;

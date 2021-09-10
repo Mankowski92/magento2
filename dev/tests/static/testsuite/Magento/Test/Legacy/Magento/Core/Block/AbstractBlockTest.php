@@ -5,9 +5,8 @@
  */
 
 /**
- * Tests usage of \Magento\Framework\view\Element\AbstractBlock
+ * Tests usage of \Magento\Framework\View\Element\AbstractBlock
  */
-
 namespace Magento\Test\Legacy\Magento\Core\Block;
 
 use Magento\Framework\App\Utility\Files;
@@ -18,11 +17,11 @@ class AbstractBlockTest extends \PHPUnit\Framework\TestCase
     {
         $invoker = new \Magento\Framework\App\Utility\AggregateInvoker($this);
         $invoker(
-        /**
-         * Tests if methods are used with correct count of parameters
-         *
-         * @param string $file
-         */
+            /**
+             * Tests if methods are used with correct count of parameters
+             *
+             * @param string $file
+             */
             function ($file) {
                 $result = \Magento\Framework\App\Utility\Classes::getAllMatches(
                     file_get_contents($file),

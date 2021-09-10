@@ -1,11 +1,10 @@
 <?php
 /**
- * Test for \Magento\Paypal\Block\Billing\Agreement\view
+ * Test for \Magento\Paypal\Block\Billing\Agreement\View
  *
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Magento\Paypal\Block\Billing\Agreement;
 
 use Magento\TestFramework\Helper\Bootstrap;

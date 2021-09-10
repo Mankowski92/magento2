@@ -3,7 +3,6 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Magento\UrlRewrite\Block\Catalog\Edit;
 
 /**
@@ -48,7 +47,7 @@ class FormTest extends \PHPUnit\Framework\TestCase
     /**
      * Check _formPostInit set expected fields values
      *
-     * @covers       \Magento\UrlRewrite\Block\Catalog\Edit\Form::_formPostInit
+     * @covers \Magento\UrlRewrite\Block\Catalog\Edit\Form::_formPostInit
      *
      * @dataProvider formPostInitDataProvider
      *
@@ -204,7 +203,7 @@ class FormTest extends \PHPUnit\Framework\TestCase
                 'catalog/category/view/id/3',
             ],
             [
-                ['entity_id' => 2, 'level' => 2, 'url_key' => 'product', 'store_id' => 1],
+                ['entity_id' => 2, 'level' => 2,  'url_key' => 'product', 'store_id' => 1],
                 null,
                 'product/2',
                 'product.html',
@@ -240,7 +239,7 @@ class FormTest extends \PHPUnit\Framework\TestCase
                     ['label' => 'Main Website', 'value' => [], '__disableTmpl' => true],
                     [
                         'label' => '    Main Website Store',
-                        'value' => [['label' => '    Default Store view', 'value' => 1]],
+                        'value' => [['label' => '    Default Store View', 'value' => 1]],
                         '__disableTmpl' => true
                     ]
                 ],
@@ -252,7 +251,7 @@ class FormTest extends \PHPUnit\Framework\TestCase
                     ['label' => 'Main Website', 'value' => [], '__disableTmpl' => true],
                     [
                         'label' => '    Main Website Store',
-                        'value' => [['label' => '    Default Store view', 'value' => 1]],
+                        'value' => [['label' => '    Default Store View', 'value' => 1]],
                         '__disableTmpl' => true
                     ]
                 ]
@@ -264,7 +263,7 @@ class FormTest extends \PHPUnit\Framework\TestCase
                     ['label' => 'Main Website', 'value' => [], '__disableTmpl' => true],
                     [
                         'label' => '    Main Website Store',
-                        'value' => [['label' => '    Default Store view', 'value' => 1]],
+                        'value' => [['label' => '    Default Store View', 'value' => 1]],
                         '__disableTmpl' => true
                     ]
                 ]

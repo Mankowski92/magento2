@@ -1,13 +1,14 @@
 <?php
 namespace Academy\EmailModule\Plugin;
 
-use Magento\Catalog\Api\Data\ProductInterface;
-use Magento\Catalog\Api\ProductRepositoryInterface;
 use Academy\EmailModule\Helper\Email;
 use Psr\Log\LoggerInterface;
+use Magento\Catalog\Controller\Adminhtml\Product\Save;
+use Magento\Catalog\Api\Data\ProductInterface;
+use Magento\Catalog\Api\ProductRepositoryInterface;
 
 
-class EmailPlugin
+class EmailPluginAdminPanel
 {
     private $helperEmail;
 
@@ -23,13 +24,10 @@ class EmailPlugin
         $this->helperEmail = $helperEmail;
         $this->logger = $logger;;
     }
-    public function beforeSave(
-        ProductRepositoryInterface $subject,
-        ProductInterface $product,
-        $saveOptions
-    )
+    public function beforeExecute(Save $subject, ProductRepositoryInterface $item = null,
+    ProductInterface $product = null)
     {
         $this->helperEmail->sendEmail($product, $subject);
-        $this->logger->info('Email sent by request');
+        $this->logger->info('Email sent by admin panel');
     }
 }

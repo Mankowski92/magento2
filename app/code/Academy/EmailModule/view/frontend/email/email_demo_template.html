@@ -1,10 +1,11 @@
 {{template config_path="design/email/header_template"}}
 <!--@subject Hello From the other side  @-->
-<table>
-    <tr>{{trans "Please check this: %templateVar." templateVar=$templateVar}}</tr>
-<br/><br/>
-    <tr>{{var product}}</tr>
+<div>
+    <h1>Hello my very best mate</h1>
+    <h3>{{trans "For your information: %templateVar." templateVar=$templateVar}}</h3>
+    <span>{{var product}}</span>
     <br/>
-    <tr>{{var price}}</tr>
-</table>
+    <span>{{var price}}</span>
+</div>
+
 {{template config_path="design/email/footer_template"}}

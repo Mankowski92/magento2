@@ -5,4 +5,7 @@
         <plugin name="academy_emailmodule" type="Academy\EmailModule\Plugin\EmailPlugin" sortOrder="1"
                 disabled="false"/>
     </type>
+    <type name="Magento\Catalog\Controller\Adminhtml\Product\Save">
+        <plugin name="academy_emailpluginadminpanel" type="Academy\EmailModule\Plugin\EmailPluginAdminPanel" disabled="false"/>
+    </type>
 </config>

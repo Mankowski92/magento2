@@ -1,14 +1,13 @@
 <?php
 namespace Academy\EmailModule\Helper;
 
-use Magento\Framework\App\Helper\Context;
 use Magento\Framework\Translate\Inline\StateInterface;
 use Magento\Framework\Escaper;
 use Magento\Framework\Mail\Template\TransportBuilder;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
-
 use Magento\Catalog\Api\ProductRepositoryInterface;
+use Psr\Log\LoggerInterface;
 
 class Email extends \Magento\Framework\App\Helper\AbstractHelper
 {
@@ -17,25 +16,22 @@ class Email extends \Magento\Framework\App\Helper\AbstractHelper
     protected $transportBuilder;
     protected $logger;
     protected $scopeConfig;
-    protected $product;
-
-    private ProductRepositoryInterface $productRepository;
+    protected $productRepository;
 
 
     public function __construct(
-        Context $context,
         StateInterface $inlineTranslation,
         Escaper $escaper,
         TransportBuilder $transportBuilder,
         ScopeConfigInterface $scopeConfig,
-        ProductRepositoryInterface $productRepository
-    ) {
-        parent::__construct($context);
+        ProductRepositoryInterface $productRepository,
+        LoggerInterface $logger
 
+    ) {
         $this->inlineTranslation = $inlineTranslation;
         $this->escaper = $escaper;
         $this->transportBuilder = $transportBuilder;
-        $this->logger = $context->getLogger();
+        $this->logger = $logger;
         $this->scopeConfig = $scopeConfig;
         $this->productRepository = $productRepository;
     }

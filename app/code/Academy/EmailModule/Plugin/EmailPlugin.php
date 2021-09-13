@@ -5,19 +5,23 @@ use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Academy\EmailModule\Helper\Email;
 use Psr\Log\LoggerInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 
 
 class EmailPlugin
 {
     private $Email;
     private $logger;
+    private $scopeConfig;
 
     public function __construct(
         Email $email,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        ScopeConfigInterface $scopeConfig
     ) {
         $this->Email = $email;
         $this->logger = $logger;
+        $this->scopeConfig = $scopeConfig;
     }
     public function beforeSave(
         ProductRepositoryInterface $subject,
@@ -25,11 +29,16 @@ class EmailPlugin
         $saveOptions = false
     )
     {
-        $this->Email->sendEmail(
-            $product->getSku(),
-            $product->getName(),
-            $product->getPrice()
-        );
+        if ($this->scopeConfig->isSetFlag(
+            'product/email/emailOnCreation',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        )) {
+            $this->Email->sendEmail(
+                $product->getSku(),
+                $product->getName(),
+                $product->getPrice()
+            );
+        }
         $this->logger->info('Email sent by request');
     }
 }

@@ -1,18 +1,11 @@
 <?xml version="1.0"?>
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
-    <table name="inchoo_declarative_schema1" resource="default" engine="innodb" comment="Inchoo Table 1">
-        <column xsi:type="int" name="table_1_id" padding="10" unsigned="true" nullable="false" identity="true" comment="ID"/>
-        <column xsi:type="varchar" name="name" comment="Name"/>
+    <table name="My custom schema" resource="default" engine="innodb" comment="Table 1">
+        <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="varchar" name="IP adress" comment="IP adress"/>
         <constraint xsi:type="primary" referenceId="PRIMARY">
-            <column name="table_1_id"/>
-        </constraint>
-    </table>
-    <table name="inchoo_declarative_schema2" resource="default" engine="innodb" comment="Inchoo Table 2">
-        <column xsi:type="int" name="table_2_id" padding="10" unsigned="true" nullable="false" identity="true" comment="ID"/>
-        <column xsi:type="text" name="content" comment="Content"/>
-        <constraint xsi:type="primary" referenceId="PRIMARY">
-            <column name="table_2_id"/>
+            <column name="id"/>
         </constraint>
     </table>
 </schema>

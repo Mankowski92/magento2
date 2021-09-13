@@ -9,27 +9,27 @@ use Psr\Log\LoggerInterface;
 
 class EmailPlugin
 {
-    private $helperEmail;
-
-    /**
-     * @var LoggerInterface
-     */
+    private $Email;
     private $logger;
 
     public function __construct(
-        Email $helperEmail,
+        Email $email,
         LoggerInterface $logger
     ) {
-        $this->helperEmail = $helperEmail;
-        $this->logger = $logger;;
+        $this->Email = $email;
+        $this->logger = $logger;
     }
     public function beforeSave(
         ProductRepositoryInterface $subject,
         ProductInterface $product,
-        $saveOptions
+        $saveOptions = false
     )
     {
-        $this->helperEmail->sendEmail($product, $subject);
+        $this->Email->sendEmail(
+            $product->getSku(),
+            $product->getName(),
+            $product->getPrice()
+        );
         $this->logger->info('Email sent by request');
     }
 }

@@ -1,33 +1,38 @@
 <?php
 namespace Academy\EmailModule\Plugin;
 
-use Academy\EmailModule\Helper\Email;
-use Psr\Log\LoggerInterface;
 use Magento\Catalog\Controller\Adminhtml\Product\Save;
-use Magento\Catalog\Api\Data\ProductInterface;
-use Magento\Catalog\Api\ProductRepositoryInterface;
-
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Academy\EmailModule\Helper\Email;
 
 class EmailPluginAdminPanel
 {
-    private $helperEmail;
 
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private ScopeConfigInterface $scopeConfig;
+    private Email $Email;
 
     public function __construct(
-        Email $helperEmail,
-        LoggerInterface $logger
+        ScopeConfigInterface $scopeConfig,
+        Email $Email
     ) {
-        $this->helperEmail = $helperEmail;
-        $this->logger = $logger;;
+        $this->scopeConfig = $scopeConfig;
+        $this->Email = $Email;
     }
-    public function beforeExecute(Save $subject, ProductRepositoryInterface $item = null,
-    ProductInterface $product = null)
+
+    public function beforeExecute(Save $subject)
     {
-        $this->helperEmail->sendEmail($product, $subject);
-        $this->logger->info('Email sent by admin panel');
+        $product = $subject->getRequest()->getPostValue()['product'];
+
+        if ($this->scopeConfig->isSetFlag(
+            'product/email/emailOnCreation',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        )) {
+            $this->Email->sendEmail(
+                $product['sku'],
+                $product['name'],
+                $product['price']
+            );
+        }
     }
+
 }

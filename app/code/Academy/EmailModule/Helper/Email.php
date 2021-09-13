@@ -8,6 +8,8 @@ use Magento\Framework\Mail\Template\TransportBuilder;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 
+use Magento\Catalog\Api\ProductRepositoryInterface;
+
 class Email extends \Magento\Framework\App\Helper\AbstractHelper
 {
     protected $inlineTranslation;
@@ -17,12 +19,16 @@ class Email extends \Magento\Framework\App\Helper\AbstractHelper
     protected $scopeConfig;
     protected $product;
 
+    private ProductRepositoryInterface $productRepository;
+
+
     public function __construct(
         Context $context,
         StateInterface $inlineTranslation,
         Escaper $escaper,
         TransportBuilder $transportBuilder,
-        ScopeConfigInterface $scopeConfig
+        ScopeConfigInterface $scopeConfig,
+        ProductRepositoryInterface $productRepository
     ) {
         parent::__construct($context);
 
@@ -31,6 +37,7 @@ class Email extends \Magento\Framework\App\Helper\AbstractHelper
         $this->transportBuilder = $transportBuilder;
         $this->logger = $context->getLogger();
         $this->scopeConfig = $scopeConfig;
+        $this->productRepository = $productRepository;
     }
 
     public function getEmails()
@@ -43,45 +50,31 @@ class Email extends \Magento\Framework\App\Helper\AbstractHelper
         return $emails;
     }
 
-    public function sendEmail($product, $subject)
+    public function sendEmail($sku, $name, $price)
     {
-
         try {
-            $existingProduct = $product->getSku();
+            $existingProduct = $this->productRepository->get($sku);
 
-            $newName = $product->getName();
-            $newPrice = $product->getPrice();
+            $oldName = $existingProduct->getName($sku);
+            $oldPrice = $existingProduct->getPrice($sku);
 
-            $desiredProduct = $subject->get($existingProduct);
-
-            $oldPrice = $desiredProduct->getPrice();
-            $oldName = $desiredProduct->getName();
-
-            $exist = true;
-
-            $ExistTemp = [
+            $temp = [
                 'templateVar'  => 'Existing product in database modified',
-                'product' => 'Product ' . $oldName . ' modified.' . ' New name is ' . $newName,
-                'price' => 'Now it costs ' . $newPrice  . ' old cost was ' . $oldPrice,
-
+                'product' => 'Product ' . $oldName . ' modified.' . ' New name is ' . $name,
+                'price' => 'Now it costs ' . $price  . ' old cost was ' . $oldPrice,
             ];
+
         } catch (NoSuchEntityException $e) {
-            $newProductName = $product->getName();
-            $newProductPrice = $product->getPrice();
 
-            $exist = false;
-
-            $NoExistTemop = [
+            $temp = [
                 'templateVar'  => 'New product added to databse',
-                'product' => 'Product ' . $newProductName . ' added to database.',
-                'price' => 'It costs ' . $newProductPrice
+                'product' => 'Product ' . $name . ' added to database.',
+                'price' => 'It costs ' . $price
             ];
         }
 
         $mails = $this->getEmails();
         $readyEmailList = explode(",", $mails);
-
-        $exist ? $properTemplateVars = $ExistTemp : $properTemplateVars = $NoExistTemop;
 
         try {
             $this->inlineTranslation->suspend();
@@ -97,7 +90,7 @@ class Email extends \Magento\Framework\App\Helper\AbstractHelper
                         'store' => \Magento\Store\Model\Store::DEFAULT_STORE_ID,
                     ]
                 )
-                ->setTemplateVars($properTemplateVars)
+                ->setTemplateVars($temp)
                 ->setFrom($sender)
                 ->addTo($readyEmailList)
                 ->getTransport();

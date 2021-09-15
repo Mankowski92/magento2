@@ -1,0 +1,11 @@
+{
+    "My_custom_schema": {
+        "column": {
+            "id": true,
+            "IP adress": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

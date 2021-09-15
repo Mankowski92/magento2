@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * Copyright © Magento, Inc. All rights reserved.
@@ -156,7 +157,7 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
      *
      * Check that customer id set and addresses saved
      */
-    public function testSaveActionWithExistingAdresses()
+    public function testSaveActionWithExistingAddresses()
     {
         $customer = $this->customerRepository->get('customer@example.com');
         $customerId = $customer->getId();

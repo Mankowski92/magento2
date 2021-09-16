@@ -5,9 +5,7 @@ namespace Academy\ModelDbModule\Cron;
 use Academy\ModelDbModule\Api\Data\IpAddressInterface;
 use Academy\ModelDbModule\Api\IpAddressRepositoryInterface;
 use Psr\Log\LoggerInterface;
-// use Magento\Framework\HTTP\PhpEnvironment\RemoteAddress;
 use Academy\ModelDbModule\Model\IpAddressFactory;
-// use Magento\Store\Model\StoreManagerInterface;
 
 class SaveIp
 {

@@ -5,31 +5,32 @@ namespace Academy\ModelDbModule\Cron;
 use Academy\ModelDbModule\Api\Data\IpAddressInterface;
 use Academy\ModelDbModule\Api\IpAddressRepositoryInterface;
 use Psr\Log\LoggerInterface;
-use Magento\Framework\HTTP\PhpEnvironment\RemoteAddress;
+// use Magento\Framework\HTTP\PhpEnvironment\RemoteAddress;
 use Academy\ModelDbModule\Model\IpAddressFactory;
+// use Magento\Store\Model\StoreManagerInterface;
 
 class SaveIp
 {
     protected $logger;
     private IpAddressRepositoryInterface $ipAddressRepository;
     private IpAddressInterface $ipAddress;
-    private \Magento\Store\Model\StoreManagerInterface $storeManager;
-    private RemoteAddress $remote;
+    // private \Magento\Store\Model\StoreManagerInterface $storeManager;
+    // private RemoteAddress $remote;
     protected $ipAddressFactory;
 
     public function __construct(
         LoggerInterface $logger,
         IpAddressRepositoryInterface $ipAddressRepository,
         IpAddressInterface $ipAddress,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        RemoteAddress $remote,
+        // StoreManagerInterface $storeManager,
+        // RemoteAddress $remote,
         IpAddressFactory $ipAddressFactory
     ) {
         $this->logger = $logger;
         $this->ipAddressRepository = $ipAddressRepository;
         $this->ipAddress = $ipAddress;
-        $this->storeManager = $storeManager;
-        $this->remote = $remote;
+        // $this->storeManager = $storeManager;
+        // $this->remote = $remote;
         $this->ipAddressFactory = $ipAddressFactory;
     }
 

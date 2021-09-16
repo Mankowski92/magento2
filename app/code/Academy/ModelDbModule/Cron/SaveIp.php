@@ -14,33 +14,28 @@ class SaveIp
     protected $logger;
     private IpAddressRepositoryInterface $ipAddressRepository;
     private IpAddressInterface $ipAddress;
-    // private \Magento\Store\Model\StoreManagerInterface $storeManager;
-    // private RemoteAddress $remote;
     protected $ipAddressFactory;
 
     public function __construct(
         LoggerInterface $logger,
         IpAddressRepositoryInterface $ipAddressRepository,
         IpAddressInterface $ipAddress,
-        // StoreManagerInterface $storeManager,
-        // RemoteAddress $remote,
         IpAddressFactory $ipAddressFactory
     ) {
         $this->logger = $logger;
         $this->ipAddressRepository = $ipAddressRepository;
         $this->ipAddress = $ipAddress;
-        // $this->storeManager = $storeManager;
-        // $this->remote = $remote;
         $this->ipAddressFactory = $ipAddressFactory;
     }
 
     public function execute()
     {
         $ip = file_get_contents('https://ipinfo.io/ip');
-        $fakeIp = long2ip(rand(0, 4294967295));
-        $randomNumber = (mt_rand(1, 10));
 
-        // $this->logger->info($ip);
+        // below variales left for tests purposes
+
+        // $fakeIp = long2ip(rand(0, 4294967295));
+        // $randomNumber = (mt_rand(1, 10));
 
         $this->ipAddress->setCurrentIpAddress($ip);
 

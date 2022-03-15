@@ -1,0 +1,35 @@
+<!-- data-bind attribute lets us bind knockout entities to our elemets -->
+<div data-bind="scope: 'tableTennis'">
+    <!-- here we create select input with options fetched from userActions observable array -->
+    <!-- and bind the selected option to selectedAction observable -->
+    <select data-bind="options: userActions, value: selectedAction"></select>
+    <!-- analogically we bind the text of a paragraph element to aiMove -->
+    <p data-bind="text: aiMove"></p>
+</div>
+<!-- here we initialize our script -->
+<script type="text/x-magento-init">
+{
+    <?php
+    // we can specify site elements on which we want to trigger our script ?>
+    <?php
+    // * means we launch it only once - for the whole page ?>
+    "*": {
+        <?php
+    // this is javascript we are launching ?>
+        "Magento_Ui/js/core/app": {
+            <?php
+    // and here we declare components of Magento_Ui/js/core/app ?>
+            "components": {
+                "tableTennis": {
+                    "component": "Man_KnockoutModule/js/view/tableTennis",
+                    <?php
+    // here we set the initial move of the player ?>
+                    "initialMove": "ping"
+                }
+            }
+        }
+    }
+}
+
+
+</script>

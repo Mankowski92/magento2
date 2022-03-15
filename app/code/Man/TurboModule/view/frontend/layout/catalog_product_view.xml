@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <!-- Reference in which container (or block) we want to add our own custom block -->
+        <referenceContainer name="content">
+            <!-- Insert our own custom block "Hello" and define our template hello.phtml. The attribute after="product.info.main" means that the element we have added will show up after product.info.main -->
+            <block class="Man\TurboModule\Block\Hello" name="man.hello"
+                   template="Man_TurboModule::hello.phtml" after="product.info.main"/>
+        </referenceContainer>
+    </body>
+</page>

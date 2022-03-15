@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<preference for="Man\ModelDbModule\Api\IpAddressRepositoryInterface" type="Man\ModelDbModule\Model\IpAddressRepository"/>
+	<preference for="Man\ModelDbModule\Api\Data\IpAddressInterface" type="Man\ModelDbModule\Model\Data\IpAddress"/>
+	<preference for="Man\ModelDbModule\Api\Data\IpAddressSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+</config>

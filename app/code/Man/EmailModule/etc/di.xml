@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Catalog\Api\ProductRepositoryInterface">
+        <plugin name="man_emailmodule" type="Man\EmailModule\Plugin\EmailPlugin" sortOrder="1"
+                disabled="false"/>
+    </type>
+    <type name="Magento\Catalog\Controller\Adminhtml\Product\Save">
+        <plugin name="man_emailpluginadminpanel" type="Man\EmailModule\Plugin\EmailPluginAdminPanel" disabled="false"/>
+    </type>
+</config>
